@@ -29,7 +29,10 @@ import time
 import os
 
 # TODO Realice la importación de priority queue
+from DataStructures.Priority_queue import priotity_queue as pq
 # TODO Realice la importación de ArrayList (al) o SingleLinked (sl) como estructura de datos auxiliar para sus requerimientos
+from DataStructures.List import array_list as al
+from DataStructures.List import single_linked_list as sl
 
 
 data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/singapur_bus_routes/'
