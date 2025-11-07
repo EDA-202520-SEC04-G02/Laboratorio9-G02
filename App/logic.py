@@ -28,9 +28,9 @@ import csv
 import time
 import os
 
-# TODO Realice la importación de priority queue
-from DataStructures.Priority_queue import priotity_queue as pq
-# TODO Realice la importación de ArrayList (al) o SingleLinked (sl) como estructura de datos auxiliar para sus requerimientos
+# TODO DONE Realice la importación de priority queue
+from DataStructures.Priority_queue import priority_queue as pq
+# TODO DONE Realice la importación de ArrayList (al) o SingleLinked (sl) como estructura de datos auxiliar para sus requerimientos
 from DataStructures.List import array_list as al
 from DataStructures.List import single_linked_list as sl
 
@@ -52,8 +52,8 @@ def new_logic():
         'routes_pq': None
     }
     
-    analyzer['stops'] = None #TODO completar la creación de la lista
-    analyzer['routes_pq'] = None #TODO completar la creación de la cola de prioridad
+    analyzer['stops'] = al.new_list() #TODO DONE completar la creación de la lista
+    analyzer['routes_pq'] = pq.new_heap() #TODO DONE completar la creación de la cola de prioridad
 
     return analyzer
 
@@ -96,7 +96,7 @@ def add_stop(analyzer, stop):
     # Agregar la parada a la lista general de paradas
     al.add_last(analyzer['stops'], stop)
 
-    # TODO: Adicionar nuevo elemento a la cola de prioridad.
+    # TODO DONE: Adicionar nuevo elemento a la cola de prioridad.
     # Para agregar un elemento a la cola de prioridad tener en cuenta las paradas
     # cuyo StopSequence sea igual a 1. 
     # La prioridad debe ser el valor de 'WD_FirstBus' y el valor asociado debe ser
@@ -114,6 +114,13 @@ def add_stop(analyzer, stop):
     #         'priority': stop['WD_FirstBus']
     #     }
     #     pq.insert(analyzer['pq'], element['priority'], element)
+    if int(stop['StopSequence']) == 1:
+        element = {
+            'route_id': stop['ServiceNo'],
+            'direction': stop['Direction'],
+            'priority': stop['WD_FirstBus']
+        }
+        pq.insert(analyzer['routes_pq'], element['priority'], element)
 
     return analyzer
 
@@ -156,7 +163,7 @@ def get_next_route(analyzer):
 
     """
 
-    # TODO: completar la función.
+    # TODO DONE: completar la función.
     # Pasos a seguir:
     # 1. Consultar el elemento con mayor prioridad en la cola (sin eliminarlo) usando pq.min(analyzer['pq'])
     # 2. Eliminar ese elemento de la cola usando pq.delMin(analyzer['pq'])
@@ -166,6 +173,6 @@ def get_next_route(analyzer):
     # next_route = pq.min(analyzer['pq'])
     # pq.delMin(analyzer['pq'])
     # return next_route
-
-    pass
+    next_route = pq.remove(analyzer['routes_pq'])
+    return next_route
 
